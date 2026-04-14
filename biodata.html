@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Marriage Biodata - Venkatesha L</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<style>
+  :root{
+    --gold:#c9a14a;
+    --gold-dark:#8a6b1d;
+    --maroon:#7a1f2b;
+    --cream:#fff8ee;
+    --ink:#2b1b1b;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:'Poppins',sans-serif;
+    background:
+      radial-gradient(circle at 20% 10%, #f6e3b8 0%, transparent 40%),
+      radial-gradient(circle at 80% 90%, #f1c9c4 0%, transparent 40%),
+      linear-gradient(135deg,#fff4dd,#ffe6d3);
+    min-height:100vh;
+    padding:30px 10px;
+    color:var(--ink);
+  }
+  .biodata-card{
+    max-width:1100px;
+    margin:0 auto;
+    background:var(--cream);
+    border:2px solid var(--gold);
+    border-radius:18px;
+    box-shadow:0 30px 60px rgba(122,31,43,.18), 0 0 0 10px #fff inset;
+    overflow:hidden;
+    position:relative;
+  }
+  .biodata-card::before,.biodata-card::after{
+    content:"";
+    position:absolute;
+    width:140px;height:140px;
+    background:radial-gradient(circle,var(--gold) 2px,transparent 3px) 0 0/14px 14px;
+    opacity:.25;
+    pointer-events:none;
+  }
+  .biodata-card::before{top:-20px;left:-20px;border-radius:50%}
+  .biodata-card::after{bottom:-20px;right:-20px;border-radius:50%}
+
+  .header{
+    text-align:center;
+    padding:30px 20px 20px;
+    background:linear-gradient(135deg,#7a1f2b,#a83246);
+    color:#fff8e1;
+    position:relative;
+  }
+  .header .om{
+    font-family:'Cinzel',serif;
+    font-size:34px;color:var(--gold);
+    text-shadow:0 2px 4px rgba(0,0,0,.3);
+  }
+  .header h1{
+    font-family:'Cinzel',serif;
+    letter-spacing:3px;
+    font-size:30px;
+    margin:8px 0 4px;
+  }
+  .header p{margin:0;color:#f7d99a;letter-spacing:2px;font-size:13px}
+  .header .divider{
+    width:120px;height:4px;margin:14px auto 0;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+
+  .body-wrap{padding:30px 25px}
+
+  .profile-row{
+    display:flex;flex-wrap:wrap;gap:25px;align-items:center;
+    margin-bottom:30px;
+  }
+  .profile-img{
+    flex:0 0 240px;
+    height:300px;
+    border-radius:14px;
+    overflow:hidden;
+    border:4px solid var(--gold);
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    background:#eee;
+    margin:0 auto;
+  }
+  .profile-img img{width:100%;height:100%;object-fit:cover;display:block}
+  .profile-intro{flex:1 1 300px;min-width:260px}
+  .profile-intro h2{
+    font-family:'Cinzel',serif;
+    color:var(--maroon);
+    font-size:32px;margin-bottom:6px;
+  }
+  .profile-intro .role{color:var(--gold-dark);font-weight:500;margin-bottom:12px}
+  .quick-chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{
+    background:#fff;border:1px solid var(--gold);
+    padding:6px 12px;border-radius:30px;
+    font-size:13px;color:var(--maroon);
+    box-shadow:0 2px 5px rgba(0,0,0,.05);
+  }
+  .chip i{color:var(--gold-dark);margin-right:5px}
+
+  .section{margin-bottom:28px}
+  .section-title{
+    font-family:'Cinzel',serif;
+    color:var(--maroon);
+    font-size:20px;
+    border-bottom:2px dashed var(--gold);
+    padding-bottom:8px;
+    margin-bottom:18px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .section-title i{
+    width:36px;height:36px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+    color:#fff;display:inline-flex;align-items:center;justify-content:center;
+    font-size:14px;
+  }
+  .info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 30px}
+  .info-item{
+    display:flex;align-items:flex-start;gap:10px;
+    padding:10px 12px;border-radius:10px;
+    background:#fff;border:1px solid #f1e2c4;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .info-item:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(122,31,43,.08)}
+  .info-item .label{
+    font-size:12px;color:var(--gold-dark);
+    text-transform:uppercase;letter-spacing:1px;font-weight:600;
+  }
+  .info-item .value{font-size:15px;color:var(--ink);font-weight:500;word-break:break-word}
+  .info-item .ico{
+    flex:0 0 36px;height:36px;border-radius:8px;
+    background:#fff8ee;border:1px solid var(--gold);
+    color:var(--maroon);
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+  }
+  .gallery .g-item{
+    height:170px;border-radius:12px;overflow:hidden;
+    border:3px solid var(--gold);
+    box-shadow:0 6px 14px rgba(0,0,0,.1);
+  }
+  .gallery .g-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+  .gallery .g-item:hover img{transform:scale(1.08)}
+
+  .footer{
+    text-align:center;padding:25px 20px;
+    background:linear-gradient(135deg,#7a1f2b,#a83246);
+    color:#fff8e1;
+  }
+  .footer .quote{
+    font-family:'Cinzel',serif;font-style:italic;
+    color:var(--gold);margin-bottom:8px;
+  }
+  .footer p{margin:4px 0;font-size:14px}
+  .footer i{color:var(--gold);margin:0 5px}
+
+  @media (max-width: 768px){
+    .info-grid{grid-template-columns:1fr}
+    .gallery{grid-template-columns:repeat(2,1fr)}
+    .header h1{font-size:24px}
+    .profile-intro h2{font-size:26px;text-align:center}
+    .profile-intro{text-align:center}
+    .quick-chips{justify-content:center}
+  }
+  .profile-img img, .gallery .g-item img{cursor:zoom-in}
+
+  .lightbox{
+    position:fixed;inset:0;
+    background:rgba(0,0,0,.85);
+    display:none;align-items:center;justify-content:center;
+    z-index:9999;padding:20px;
+    animation:fadeIn .25s ease;
+  }
+  .lightbox.active{display:flex}
+  .lightbox img{
+    max-width:95%;max-height:90vh;
+    border-radius:10px;border:3px solid var(--gold);
+    box-shadow:0 20px 60px rgba(0,0,0,.6);
+    animation:zoomIn .25s ease;
+  }
+  .lightbox .close-btn{
+    position:absolute;top:20px;right:25px;
+    width:42px;height:42px;border-radius:50%;
+    background:var(--maroon);color:#fff;border:2px solid var(--gold);
+    font-size:20px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes zoomIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+
+  @media (max-width: 420px){
+    .gallery{grid-template-columns:1fr}
+    .profile-img{flex:0 0 100%;height:340px}
+  }
+</style>
+</head>
+<body>
+
+<div class="biodata-card">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="om">|| ॐ श्री गणेशाय नमः ||</div>
+    <h1>Marriage Biodata</h1>
+    <p>WITH BLESSINGS OF THE ALMIGHTY</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="body-wrap">
+
+    <!-- Profile -->
+    <div class="profile-row">
+      <!-- <div class="profile-img">
+        <img src="./WhatsApp Image 2026-04-14 at 5.15.59 PM.jpeg" alt="Profile photo" />
+      </div> -->
+      <div class="profile-intro">
+        <h2>Venkatesha L</h2>
+        <div class="role"><i class="fa-solid fa-briefcase"></i> Software Engineer</div>
+        <div class="quick-chips">
+          <span class="chip"><i class="fa-solid fa-cake-candles"></i>19 Feb 1998</span>
+          <span class="chip"><i class="fa-solid fa-ruler-vertical"></i>5'10"</span>
+          <span class="chip"><i class="fa-solid fa-star"></i>Vishakha</span>
+          <span class="chip"><i class="fa-solid fa-moon"></i>Vrishabha</span>
+          <span class="chip"><i class="fa-solid fa-graduation-cap"></i>B.E.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Personal Details -->
+    <div class="section">
+      <div class="section-title"><i class="fa-solid fa-user"></i> Personal Details</div>
+      <div class="info-grid">
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-id-card"></i></div>
+          <div><div class="label">Name</div><div class="value">Venkatesha L</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-cake-candles"></i></div>
+          <div><div class="label">Date Of Birth</div><div class="value">19 / 02 / 1998</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-location-dot"></i></div>
+          <div><div class="label">Place Of Birth</div><div class="value">Huvina Hadagali</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-regular fa-clock"></i></div>
+          <div><div class="label">Time Of Birth</div><div class="value">10:00 AM</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-moon"></i></div>
+          <div><div class="label">Rashi</div><div class="value">Vrishabha (Taurus)</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-star"></i></div>
+          <div><div class="label">Nakshatra</div><div class="value">Vishakha</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-palette"></i></div>
+          <div><div class="label">Complexion</div><div class="value">Medium</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-ruler-vertical"></i></div>
+          <div><div class="label">Height</div><div class="value">5 feet 10 inches</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-om"></i></div>
+          <div><div class="label">Gotra</div><div class="value">Jarapla</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div><div class="label">Bachelors</div><div class="value">B E</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-briefcase"></i></div>
+          <div><div class="label">Work</div><div class="value">Software Engineer</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+          <div><div class="label">Salary</div><div class="value">₹ 50,000 / month</div></div></div>
+      </div>
+    </div>
+
+    <!-- Family Details -->
+    <div class="section">
+      <div class="section-title"><i class="fa-solid fa-people-roof"></i> Family Details</div>
+      <div class="info-grid">
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-person"></i></div>
+          <div><div class="label">Father's Name</div><div class="value">Late L Bhadra Naik</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-chalkboard-user"></i></div>
+          <div><div class="label">Father's Occupation</div><div class="value">Teacher</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-person-dress"></i></div>
+          <div><div class="label">Mother's Name</div><div class="value">Sharada</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-house-user"></i></div>
+          <div><div class="label">Mother's Occupation</div><div class="value">Home Maker</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-people-group"></i></div>
+          <div><div class="label">Siblings</div><div class="value">L Latha</div></div></div>
+      </div>
+    </div>
+
+    <!-- Contact Details -->
+    <div class="section">
+      <div class="section-title"><i class="fa-solid fa-address-book"></i> Contact Details</div>
+      <div class="info-grid">
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-user-tie"></i></div>
+          <div><div class="label">Contact Person</div><div class="value">Sharada</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-phone"></i></div>
+          <div><div class="label">Contact Number</div><div class="value">+91 8317499410</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-envelope"></i></div>
+          <div><div class="label">Email ID</div><div class="value">lvenkatesha89@gmail.com</div></div></div>
+        <div class="info-item"><div class="ico"><i class="fa-solid fa-house"></i></div>
+          <div><div class="label">Residential Address</div><div class="value">Koilayaragatti Thanda</div></div></div>
+      </div>
+    </div>
+
+    <!-- Gallery -->
+    <!-- <div class="section">
+      <div class="section-title"><i class="fa-solid fa-images"></i> Gallery</div>
+      <div class="gallery">
+        <div class="g-item"><img src="./WhatsApp Image 2026-04-14 at 5.12.54 PM.jpeg?w=500&q=80" alt=""></div>
+        <div class="g-item"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=500&q=80" alt=""></div>
+        <div class="g-item"><img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=500&q=80" alt=""></div>
+      </div>
+    </div> -->
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <!-- <div class="quote">"Marriages are made in Heaven"</div>
+    <p><i class="fa-solid fa-heart"></i> Thank You <i class="fa-solid fa-heart"></i></p>
+    <p style="font-size:12px;opacity:.85">Looking forward to a blessed alliance</p> -->
+  </div>
+
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="close-btn" id="lbClose" aria-label="Close">&times;</button>
+  <img id="lbImg" src="" alt="Full view" />
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  (function(){
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbClose = document.getElementById('lbClose');
+    document.querySelectorAll('.profile-img img, .gallery .g-item img').forEach(img=>{
+      img.addEventListener('click', ()=>{
+        lbImg.src = img.src;
+        lb.classList.add('active');
+      });
+    });
+    function close(){ lb.classList.remove('active'); lbImg.src=''; }
+    lbClose.addEventListener('click', close);
+    lb.addEventListener('click', e=>{ if(e.target===lb) close(); });
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') close(); });
+  })();
+</script>
+</body>
+</html>
