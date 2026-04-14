@@ -230,7 +230,7 @@
         <div class="quick-chips">
           <span class="chip"><i class="fa-solid fa-cake-candles"></i>21 Nov 2001</span>
           <span class="chip"><i class="fa-solid fa-ruler-vertical"></i>5'</span>
-          <span class="chip"><i class="fa-solid fa-star"></i>Vishakha</span>
+          <!-- <span class="chip"><i class="fa-solid fa-star"></i>Vishakha</span> -->
           <span class="chip"><i class="fa-solid fa-moon"></i>ಮೇಷ (Aries)</span>
           <span class="chip"><i class="fa-solid fa-graduation-cap"></i>Bsc, B.ed</span>
         </div>
@@ -292,9 +292,9 @@
       <div class="section-title"><i class="fa-solid fa-address-book"></i> Contact Details</div>
       <div class="info-grid">
         <div class="info-item"><div class="ico"><i class="fa-solid fa-user-tie"></i></div>
-          <div><div class="label">Contact Person</div><div class="value">Sharada</div></div></div>
+          <div><div class="label">Contact Person</div><div class="value">Venkatesha L</div></div></div>
         <div class="info-item"><div class="ico"><i class="fa-solid fa-phone"></i></div>
-          <div><div class="label">Contact Number</div><div class="value">+91 8497830714</div></div></div>
+          <div><div class="label">Contact Number</div><div class="value">+91 8317499410</div></div></div>
         <div class="info-item"><div class="ico"><i class="fa-solid fa-envelope"></i></div>
           <div><div class="label">Email ID</div><div class="value">lvenkatesha89@gmail.com</div></div></div>
         <div class="info-item"><div class="ico"><i class="fa-solid fa-house"></i></div>
@@ -352,24 +352,39 @@
     document.addEventListener('keydown', e=>{ if(e.key==='Escape') close(); });
   })();
 
-  /* Anti-inspect / anti-download deterrents (not foolproof) */
+  /* Anti-inspect / anti-capture deterrents (not foolproof — browsers cannot block OS screenshots) */
   (function(){
     document.addEventListener('contextmenu', e=>e.preventDefault());
     document.addEventListener('dragstart', e=>e.preventDefault());
     document.addEventListener('selectstart', e=>e.preventDefault());
     document.addEventListener('copy', e=>e.preventDefault());
+    document.addEventListener('cut', e=>e.preventDefault());
     document.addEventListener('keydown', e=>{
       const k = (e.key||'').toLowerCase();
       if(e.key === 'F12') return e.preventDefault();
-      if(e.ctrlKey && e.shiftKey && ['i','j','c'].includes(k)) return e.preventDefault();
-      if(e.ctrlKey && ['u','s','p'].includes(k)) return e.preventDefault();
+      if(e.key === 'PrintScreen'){
+        navigator.clipboard && navigator.clipboard.writeText('');
+        alert('Screen capture is disabled on this biodata.');
+        return e.preventDefault();
+      }
+      if(e.ctrlKey && e.shiftKey && ['i','j','c','s','p'].includes(k)) return e.preventDefault();
+      if(e.ctrlKey && ['u','s','p','a'].includes(k)) return e.preventDefault();
+      if(e.metaKey && e.shiftKey && ['3','4','5'].includes(k)) return e.preventDefault(); // macOS
       if(e.metaKey && e.altKey && ['i','j','c'].includes(k)) return e.preventDefault();
     });
-    const blurOn = ()=>document.body.style.filter='blur(25px)';
+    window.addEventListener('keyup', e=>{
+      if(e.key === 'PrintScreen'){
+        navigator.clipboard && navigator.clipboard.writeText('');
+        alert('Screen capture is disabled on this biodata.');
+      }
+    });
+    /* Hide content when tab/window loses focus (screenshot tool deterrent) */
+    const blurOn = ()=>document.body.style.filter='blur(30px)';
     const blurOff = ()=>document.body.style.filter='';
     document.addEventListener('visibilitychange', ()=>document.hidden?blurOn():blurOff());
     window.addEventListener('blur', blurOn);
     window.addEventListener('focus', blurOff);
+    /* DevTools detection */
     setInterval(()=>{
       const t = performance.now();
       debugger;
@@ -377,12 +392,44 @@
         document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;color:#7a1f2b;text-align:center;padding:20px">Developer tools detected.<br/>Please close them to view this biodata.</div>';
       }
     }, 1500);
+
+    /* Dynamic watermark overlay — any screenshot carries identifying info */
+    const wm = document.createElement('div');
+    wm.id = 'bio-watermark';
+    const stamp = new Date().toLocaleString();
+    const viewerId = Math.random().toString(36).slice(2,8).toUpperCase();
+    const text = `Venkatesha L • +91 8317499410 • ${stamp} • ID:${viewerId}`;
+    let tiles = '';
+    for(let i=0;i<80;i++) tiles += `<span>${text}</span>`;
+    wm.innerHTML = tiles;
+    document.body.appendChild(wm);
   })();
 </script>
 <style>
   html, body { -webkit-user-select:none; -ms-user-select:none; user-select:none; -webkit-touch-callout:none; }
   img { -webkit-user-drag:none; }
   @media print { body { display:none !important; } }
+
+  #bio-watermark{
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:9998;
+    display:flex; flex-wrap:wrap;
+    gap:40px 60px;
+    padding:30px;
+    transform:rotate(-30deg);
+    transform-origin:center;
+    overflow:hidden;
+    opacity:.18;
+  }
+  #bio-watermark span{
+    font-family:'Poppins',sans-serif;
+    font-size:13px;
+    color:#7a1f2b;
+    white-space:nowrap;
+    font-weight:600;
+    letter-spacing:1px;
+  }
 </style>
 </body>
 </html>
