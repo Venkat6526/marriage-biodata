@@ -7,18 +7,10 @@
 <style id="bio-gate-style">html,body{margin:0}body{visibility:hidden}</style>
 <script>
   (function(){
-    const PASS_HASH = 'a3d52b2f7bfa68e47ed7f8f8e47f6c4b7f5c8c8b0e2a9d1c2f3e4a5b6c7d8e9f';
-    async function sha256(s){
-      const b = new TextEncoder().encode(s);
-      const h = await crypto.subtle.digest('SHA-256', b);
-      return Array.from(new Uint8Array(h)).map(x=>x.toString(16).padStart(2,'0')).join('');
-    }
     const PASS = '8317499410';
-    if(sessionStorage.getItem('bio-auth') === '1'){
-      document.documentElement.dataset.auth = '1';
-      return;
-    }
-    window.addEventListener('DOMContentLoaded', async ()=>{
+    function showGate(){
+      if(document.getElementById('bio-gate')) return;
+      document.body.style.visibility='hidden';
       const overlay = document.createElement('div');
       overlay.id = 'bio-gate';
       overlay.innerHTML = `
@@ -34,12 +26,12 @@
       const inp = document.getElementById('bio-pass');
       const btn = document.getElementById('bio-submit');
       const err = document.getElementById('bio-err');
-      inp.focus();
+      setTimeout(()=>inp.focus(),50);
       function tryUnlock(){
         if(inp.value === PASS){
-          sessionStorage.setItem('bio-auth','1');
           overlay.remove();
-          document.getElementById('bio-gate-style').remove();
+          const s = document.getElementById('bio-gate-style');
+          if(s) s.remove();
           document.body.style.visibility='visible';
         } else {
           err.textContent = 'Incorrect passcode. Please try again.';
@@ -48,16 +40,13 @@
       }
       btn.addEventListener('click', tryUnlock);
       inp.addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock(); });
+    }
+    window.addEventListener('DOMContentLoaded', showGate);
+    // Back/forward cache restore — force gate again
+    window.addEventListener('pageshow', e=>{
+      if(e.persisted) showGate();
     });
   })();
-  // If already authed, show body immediately
-  if(sessionStorage.getItem('bio-auth') === '1'){
-    document.addEventListener('DOMContentLoaded', ()=>{
-      const s = document.getElementById('bio-gate-style');
-      if(s) s.remove();
-      document.body.style.visibility='visible';
-    });
-  }
 </script>
 <style>
   #bio-gate{
