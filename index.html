@@ -4,6 +4,96 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Marriage Biodata - Latha L</title>
+<style id="bio-gate-style">html,body{margin:0}body{visibility:hidden}</style>
+<script>
+  (function(){
+    const PASS_HASH = 'a3d52b2f7bfa68e47ed7f8f8e47f6c4b7f5c8c8b0e2a9d1c2f3e4a5b6c7d8e9f';
+    async function sha256(s){
+      const b = new TextEncoder().encode(s);
+      const h = await crypto.subtle.digest('SHA-256', b);
+      return Array.from(new Uint8Array(h)).map(x=>x.toString(16).padStart(2,'0')).join('');
+    }
+    const PASS = '8317499410';
+    if(sessionStorage.getItem('bio-auth') === '1'){
+      document.documentElement.dataset.auth = '1';
+      return;
+    }
+    window.addEventListener('DOMContentLoaded', async ()=>{
+      const overlay = document.createElement('div');
+      overlay.id = 'bio-gate';
+      overlay.innerHTML = `
+        <div class="bio-gate-box">
+          <div class="bio-gate-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h2>Private Biodata</h2>
+          <p>Enter the passcode to view this biodata.</p>
+          <input type="password" id="bio-pass" placeholder="Enter passcode" autocomplete="off" />
+          <div class="bio-gate-err" id="bio-err"></div>
+          <button id="bio-submit">Unlock</button>
+        </div>`;
+      document.body.appendChild(overlay);
+      const inp = document.getElementById('bio-pass');
+      const btn = document.getElementById('bio-submit');
+      const err = document.getElementById('bio-err');
+      inp.focus();
+      function tryUnlock(){
+        if(inp.value === PASS){
+          sessionStorage.setItem('bio-auth','1');
+          overlay.remove();
+          document.getElementById('bio-gate-style').remove();
+          document.body.style.visibility='visible';
+        } else {
+          err.textContent = 'Incorrect passcode. Please try again.';
+          inp.value=''; inp.focus();
+        }
+      }
+      btn.addEventListener('click', tryUnlock);
+      inp.addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock(); });
+    });
+  })();
+  // If already authed, show body immediately
+  if(sessionStorage.getItem('bio-auth') === '1'){
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const s = document.getElementById('bio-gate-style');
+      if(s) s.remove();
+      document.body.style.visibility='visible';
+    });
+  }
+</script>
+<style>
+  #bio-gate{
+    position:fixed; inset:0; z-index:100000;
+    visibility:visible;
+    background:linear-gradient(135deg,#7a1f2b,#a83246);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Poppins',sans-serif; padding:20px;
+  }
+  #bio-gate .bio-gate-box{
+    background:#fff8ee; border:2px solid #c9a14a; border-radius:16px;
+    padding:35px 30px; max-width:380px; width:100%;
+    text-align:center; box-shadow:0 20px 50px rgba(0,0,0,.3);
+  }
+  #bio-gate .bio-gate-icon{
+    width:70px; height:70px; margin:0 auto 15px;
+    border-radius:50%; background:linear-gradient(135deg,#c9a14a,#8a6b1d);
+    color:#fff; display:flex; align-items:center; justify-content:center;
+  }
+  #bio-gate h2{ color:#7a1f2b; margin:0 0 6px; font-family:'Cinzel',serif; }
+  #bio-gate p{ color:#8a6b1d; font-size:14px; margin:0 0 20px; }
+  #bio-gate input{
+    width:100%; padding:12px 14px; border:1.5px solid #c9a14a; border-radius:8px;
+    font-size:16px; outline:none; background:#fff; margin-bottom:12px;
+    letter-spacing:2px; text-align:center;
+  }
+  #bio-gate input:focus{ border-color:#7a1f2b; box-shadow:0 0 0 3px rgba(122,31,43,.15); }
+  #bio-gate .bio-gate-err{ color:#c0392b; font-size:13px; min-height:18px; margin-bottom:8px; }
+  #bio-gate button{
+    width:100%; padding:12px; border:none; border-radius:8px;
+    background:linear-gradient(135deg,#7a1f2b,#a83246); color:#fff;
+    font-size:15px; font-weight:600; letter-spacing:1px; cursor:pointer;
+    transition:transform .15s;
+  }
+  #bio-gate button:hover{ transform:translateY(-1px); }
+</style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
