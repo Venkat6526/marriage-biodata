@@ -340,8 +340,11 @@
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lbImg');
     const lbClose = document.getElementById('lbClose');
-    document.querySelectorAll('.profile-img img, .gallery .g-item img').forEach(img=>{
-      img.addEventListener('click', ()=>{
+    document.querySelectorAll('.profile-img, .gallery .g-item').forEach(wrap=>{
+      wrap.style.cursor='zoom-in';
+      wrap.addEventListener('click', ()=>{
+        const img = wrap.querySelector('img');
+        if(!img) return;
         lbImg.src = img.src;
         lb.classList.add('active');
       });
@@ -422,6 +425,26 @@
     overflow:hidden;
     opacity:.18;
   }
+  /* Image protection — transparent overlay prevents long-press save on mobile & drag/right-click */
+  .profile-img, .gallery .g-item, .lightbox{ position:relative; }
+  .profile-img::after, .gallery .g-item::after, .lightbox::after{
+    content:"";
+    position:absolute; inset:0;
+    z-index:5;
+    background:transparent;
+    pointer-events:auto;
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    user-select:none;
+  }
+  .profile-img img, .gallery .g-item img, .lightbox img{
+    -webkit-user-drag:none !important;
+    -khtml-user-drag:none !important;
+    -moz-user-drag:none !important;
+    -webkit-touch-callout:none !important;
+    pointer-events:none !important;
+  }
+
   #bio-watermark span{
     font-family:'Poppins',sans-serif;
     font-size:13px;
